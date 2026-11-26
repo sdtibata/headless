@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Presupuesto personal que lee sus datos de WordPress por la API REST.">
+  <title>Mi presupuesto</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header>
+    <h1>Mi presupuesto</h1>
+    <p>Esta página no es WordPress: solo le pide los datos por la API REST.</p>
+  </header>
+
+  <main>
+    <p id="mensaje" role="status"></p>
+
+    <!-- 0. Conexión: la URL de tu API y la clave que te dio el profe -->
+    <details id="conexion" open>
+      <summary>Conexión</summary>
+      <form id="form-conexion">
+        <label>URL de la API <input id="api" placeholder="http://presupuesto.local/wp-json/presupuesto-jp/v1" required></label>
+        <label>Clave (API key) <input id="clave" type="password" placeholder="La que te dio el profe"></label>
+        <button type="submit">Guardar y probar</button>
+      </form>
+    </details>
+
+    <!-- 1. Resumen -->
+    <section class="resumen">
+      <div><span>Ingresos</span><strong id="ingresos">$0</strong></div>
+      <div><span>Gastos</span><strong id="gastos">$0</strong></div>
+      <div><span>Saldo</span><strong id="saldo">$0</strong></div>
+    </section>
+
+    <!-- 2. Formulario para crear o editar -->
+    <form id="form-movimiento">
+      <h2 id="titulo-form">Nuevo movimiento</h2>
+      <input type="hidden" id="id">
+      <label>Concepto <input id="concepto" required></label>
+      <label>Tipo
+        <select id="tipo">
+          <option value="gasto">Gasto</option>
+          <option value="ingreso">Ingreso</option>
+        </select>
+      </label>
+      <label>Monto <input id="monto" type="number" min="1" step="1" required></label>
+      <label>Fecha <input id="fecha" type="date"></label>
+      <div class="botones">
+        <button type="submit" id="boton">Agregar</button>
+        <button type="button" id="cancelar" hidden>Cancelar</button>
+      </div>
+    </form>
+
+    <!-- 3. Lista de movimientos -->
+    <h2>Movimientos</h2>
+    <table>
+      <thead><tr><th>Fecha</th><th>Concepto</th><th>Monto</th><th></th></tr></thead>
+      <tbody id="lista"></tbody>
+    </table>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
